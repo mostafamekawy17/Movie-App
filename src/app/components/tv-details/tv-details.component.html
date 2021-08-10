@@ -1,0 +1,246 @@
+<app-trailer
+  *ngIf="trailerOn"
+  (close)="turnOffTrailer()"
+  [key]="relatedvideo[0]?.key"
+></app-trailer>
+<app-trailer
+  *ngIf="videoOn"
+  (close)="turnOffTrailer()"
+  [key]="videoKey"
+></app-trailer>
+
+<div class="slider">
+  <div class="details">
+    <h1>{{ tvshow?.title }}</h1>
+    <p>{{ tvshow?.overview | shortenStoryline }}</p>
+    <button class="btn btn-primary" (click)="turnOnTrailer()">
+      <i class="bi bi-play-btn"></i> Watch Trailer
+    </button>
+  </div>
+  <div class="poster">
+    <img
+      width="100%"
+      height="auto"
+      alt="{{ tvshow?.title }}"
+      src="https://image.tmdb.org/t/p/original/{{ tvshow?.backdrop_path }}"
+    />
+  </div>
+</div>
+<!-- <div class="image">
+  <div class="black">
+    <div class="detials">
+      <h1>
+        {{ tvshow?.original_name }}
+      </h1>
+      <p>{{ tvshow?.overview }}</p>
+      <button class="btn btn-primary btn-lg mt-4" (click)="turnOnTrailer()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-play-btn"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"
+          />
+          <path
+            d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"
+          />
+        </svg>
+        Watch Trailer
+      </button>
+    </div>
+  </div>
+  <img
+    alt="{{ tvshow?.original_name }}"
+    src="https://image.tmdb.org/t/p/original/{{ tvshow?.backdrop_path }}"
+  />
+  <div class="overlay_"></div>
+</div> -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <mat-tab-group
+        mat-align-tabs="center"
+        class="mt-5 mb-5"
+        animationDuration="0ms"
+      >
+        <mat-tab label="OVERVIEW">
+          <div class="mt-2">
+            <div class="row">
+              <div class="col-2">
+                <img
+                  class="img-thumbnail"
+                  src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{
+                    tvshow?.poster_path
+                  }}"
+                />
+              </div>
+              <div class="col-10">
+                <h1>Storyline</h1>
+                <p>{{ tvshow?.overview }}</p>
+                <div class="row mb-1">
+                  <div class="col-2">Released</div>
+                  <div class="col-2">{{ tvshow?.release_date | date }}</div>
+                  <div class="col-2 offset-1">Runtime</div>
+                  <div class="col-2">{{ tvshow?.runtime }} mins</div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-2">Budget</div>
+                  <div class="col-2">{{ tvshow?.budget | currency }}</div>
+                  <div class="col-2 offset-1">Genre</div>
+                  <div class="col">
+                    <span class="comma_" *ngFor="let genre of tvshow?.genres">{{
+                      genre?.name
+                    }}</span>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-2">Status</div>
+                  <div class="col-2">{{ tvshow?.status }}</div>
+                  <div class="col-2 offset-1">Language</div>
+                  <div class="col-2">
+                    <span
+                      class="comma_"
+                      *ngFor="let language of tvshow?.spoken_languages"
+                      >{{ language?.name }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h1 class="mt-4 mb-2">Cast</h1>
+            <p-carousel
+              [value]="casts"
+              [numVisible]="4"
+              [numScroll]="4"
+              [circular]="false"
+              [responsiveOptions]="responsiveOptions"
+              [showIndicators]="false"
+            >
+              <ng-template let-cast pTemplate="item">
+                <div class="card movie_card" style="cursor: auto">
+                  <img
+                    *ngIf="cast.profile_path"
+                    src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{
+                      cast.profile_path
+                    }}"
+                    class="card-img-top"
+                  />
+                  <img
+                    *ngIf="!cast.profile_path"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/1200px-Unknown_person.jpg"
+                    class="card-img-top"
+                  />
+                  <div class="card-body">
+                    <h6 class="card-title">{{ cast?.name }}</h6>
+                  </div>
+                </div>
+              </ng-template>
+            </p-carousel>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="VIDEOS">
+          <div class="container-fluid mt-2">
+            <div class="row row-cols-md-4 row-cols-2">
+              <div class="col" *ngFor="let list of relatedvideo">
+                <div class="videos p-4" (click)="getKey(list.key)">
+                  <div (click)="turnOnVideo()">
+                    <div class="img-video">
+                      <img
+                        width="100%"
+                        height="auto"
+                        src="https://img.youtube.com/vi/{{
+                          list?.key
+                        }}/mqdefault.jpg"
+                      />
+                      <div class="play__icon">
+                        <i class="bi bi-play-circle"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="name">
+                    {{ list?.name }}
+                  </div>
+                  <div>
+                    {{ list?.type }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="PHOTOS">
+          <div class="container-fluid mt-4">
+            <div class="row row-cols-md-4 row-cols-2">
+              <div class="col" *ngFor="let backdrop of backdrops">
+                <div class="mb-2">
+                  <div>
+                    <img
+                      width="100%"
+                      height="auto"
+                      src="https://image.tmdb.org/t/p/w533_and_h300_bestv2/{{
+                        backdrop?.file_path
+                      }}"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+  <!-- --- RECOMMENDED MOVIES --- -->
+  <hr />
+  <h1 class="mt-4 mb-2">Recommended Tv Shows</h1>
+
+  <p-carousel
+    [value]="recomendTV"
+    [numVisible]="5"
+    [numScroll]="5"
+    [circular]="false"
+    [responsiveOptions]="responsiveOptions"
+    [showIndicators]="false"
+  >
+    <ng-template let-tvshow pTemplate="item">
+      <div class="card movie_card" [routerLink]="['/tv/', tvshow.id]">
+        <img
+          *ngIf="tvshow?.poster_path"
+          src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{
+            tvshow?.poster_path
+          }}"
+          class="card-img-top"
+        />
+        <img
+          *ngIf="!tvshow?.poster_path"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/1200px-Unknown_person.jpg"
+          class="card-img-top"
+        />
+        <div class="overlay"></div>
+        <div class="card-body">
+          <i
+            class="bi bi-play-circle-fill play_button"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Play Trailer"
+          >
+          </i>
+          <h6 class="card-title">{{ tvshow?.original_name | shortenTitle }}</h6>
+          <span class="movie_info">{{
+            tvshow.first_air_date | date: "yyyy"
+          }}</span>
+          <span class="movie_info float-end"
+            ><i class="bi bi-star-fill"></i> {{ tvshow.vote_average }}</span
+          >
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>

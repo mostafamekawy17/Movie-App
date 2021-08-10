@@ -1,0 +1,35 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 50;
+}
+
+iframe {
+  width: 100%;
+  height: 478px;
+}
+
+.dialog {
+  position: fixed;
+  top: 10vh;
+  left: 15vw;
+  width: 70%;
+  height: 50%;
+  padding: 16px;
+  z-index: 100;
+}
+
+@media screen and (max-width: 520px) {
+  .dialog {
+    width: 80%;
+    top: 20vh;
+    left: 12vw;
+  }
+  iframe {
+    height: 140px;
+  }
+}

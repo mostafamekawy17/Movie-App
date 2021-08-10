@@ -1,0 +1,11 @@
+<div class="backdrop" (click)="onClose()"></div>
+<div class="dialog">
+  <a href="javascript:void(0)" class="float-end">
+    <button class="btn-close btn-close-white" (click)="onClose()"></button>
+  </a>
+  <iframe
+    [src]="playTrailer()"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+  ></iframe>
+</div>

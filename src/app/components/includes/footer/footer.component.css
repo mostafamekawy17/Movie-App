@@ -1,0 +1,14 @@
+p a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #0e4eafda;
+}
+section a {
+  width: 4rem;
+  height: 3rem;
+  margin: 2rem;
+}
+
+section a svg:hover {
+  fill: #0e4eafda;
+}

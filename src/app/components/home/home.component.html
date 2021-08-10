@@ -1,0 +1,120 @@
+<ng-container>
+  <app-slider></app-slider>
+</ng-container>
+
+<div class="list">
+  <h1>Trending Movies</h1>
+  <a [routerLink]="['/movies']" routerLinkActive="router-link-active">
+    <strong>Explore All</strong>
+  </a>
+
+  <!-- <app-myskeleton *ngIf="loader"></app-myskeleton> -->
+
+  <mat-progress-spinner
+    class="m-auto"
+    mode="indeterminate"
+    *ngIf="loader"
+  ></mat-progress-spinner>
+
+  <p-carousel
+    *ngIf="!loader"
+    [value]="nowPlaying"
+    [numVisible]="5"
+    [numScroll]="5"
+    [circular]="false"
+    [responsiveOptions]="responsiveOptions"
+    [showIndicators]="false"
+  >
+    <ng-template let-movie pTemplate="item">
+      <div class="card movie_card" [routerLink]="['/movie', movie.id]">
+        <img
+          *ngIf="movie?.poster_path"
+          src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{
+            movie?.poster_path
+          }}"
+          class="card-img-top"
+        />
+        <img
+          *ngIf="!movie?.poster_path"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/1200px-Unknown_person.jpg"
+          class="card-img-top"
+        />
+        <div class="overlay"></div>
+        <div class="card-body">
+          <i
+            class="bi bi-play-circle-fill play_button"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Play Trailer"
+          >
+          </i>
+          <h6 class="card-title">{{ movie?.title | shortenTitle }}</h6>
+          <span class="movie_info">{{
+            movie.release_date | date: "yyyy"
+          }}</span>
+          <span class="movie_info float-end"
+            ><i class="bi bi-star-fill"></i> {{ movie.vote_average }}</span
+          >
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>
+<div class="list">
+  <h1>Trending TV Shows</h1>
+  <a [routerLink]="['/tv']" routerLinkActive="router-link-active">
+    <strong>Explore All</strong>
+  </a>
+
+  <!-- <app-myskeleton *ngIf="loader"></app-myskeleton> -->
+
+  <mat-progress-spinner
+    class="m-auto"
+    mode="indeterminate"
+    *ngIf="loader"
+  ></mat-progress-spinner>
+
+  <p-carousel
+    *ngIf="!loader"
+    [value]="onAir"
+    [numVisible]="5"
+    [numScroll]="5"
+    [circular]="false"
+    [responsiveOptions]="responsiveOptions"
+    [showIndicators]="false"
+  >
+    <ng-template let-tvshow pTemplate="item">
+      <div class="card movie_card" [routerLink]="['/tv/', tvshow.id]">
+        <img
+          *ngIf="tvshow?.poster_path"
+          src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{
+            tvshow?.poster_path
+          }}"
+          class="card-img-top"
+        />
+        <img
+          *ngIf="!tvshow?.poster_path"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/1200px-Unknown_person.jpg"
+          class="card-img-top"
+        />
+        <div class="overlay"></div>
+        <div class="card-body">
+          <i
+            class="bi bi-play-circle-fill play_button"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Play Trailer"
+          >
+          </i>
+          <h6 class="card-title">{{ tvshow?.original_name | shortenTitle }}</h6>
+          <span class="movie_info">{{
+            tvshow.first_air_date | date: "yyyy"
+          }}</span>
+          <span class="movie_info float-end"
+            ><i class="bi bi-star-fill"></i> {{ tvshow.vote_average }}</span
+          >
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>

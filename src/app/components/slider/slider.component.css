@@ -1,0 +1,45 @@
+
+.slider {
+  display: flex;
+  background: linear-gradient(to right, #000 0, #000 35%, transparent 100%);
+
+}
+.slider .poster {
+  width: 70%;
+  z-index: -1;
+}
+
+.slider .details {
+  width: 30%;
+  color: white;
+  margin-top: 5%;
+  margin-left: 5%;
+}
+.slider .details h1 {
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.slider .details p {
+  font-size: 14px;
+}
+
+
+
+@media screen and (max-width: 1000px) {
+  .slider .details p {
+    font-size: 10px;
+    line-height: 110%;
+  }
+}
+@media screen and (max-width: 700px) {
+  .slider .details h1 {
+    font-size: .6rem;
+    line-height: 110%;
+  }
+  .slider .details p {
+    font-size: 8px;
+    line-height: 110%;
+  }
+}
+

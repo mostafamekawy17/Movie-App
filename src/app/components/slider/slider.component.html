@@ -1,0 +1,27 @@
+
+  <p-carousel
+  [value]="movies_data"
+  [numVisible]="1"
+  [numScroll]="1"
+  [circular]="true"
+  [showNavigators]="false"
+  [autoplayInterval]="3000"
+  [showIndicators]="false"
+>
+  <ng-template let-movie pTemplate="item">
+    <div class="slider">
+      <div class="details">
+        <h1 [routerLink]="['/movie/', movie?.id]">{{ movie?.title }}</h1>
+        <p>{{ movie?.overview | shortenStoryline }}</p>
+      </div>
+      <div class="poster">
+        <img
+        width="100%"
+        height="auto"
+        alt="{{ movie?.title }}"
+        src="https://image.tmdb.org/t/p/original/{{ movie?.backdrop_path }}"/>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>
+
